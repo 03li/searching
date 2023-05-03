@@ -8,23 +8,32 @@ import { GetDataService } from './get-data.service';
 })
 export class AppComponent{
   val!:string;
-  result!:string;
+  bcuid!:string;
+  port!:string;
   wait = false;
 
   constructor(private service:GetDataService) {}
 
   onSearch() {
-    this.result = ""
+    this.bcuid = ""
+    this.port = ""
     this.service.getData().subscribe((data:any[])=>{
-      this.wait = true
       for (let i = 0; i < data.length; i++) {
-        if(data[i].port==this.val || data[i].dev==this.val) {
-          this.result = data[i].bcuid
-          this.wait = false
+        if(data[i].dev==this.val) {
+          this.bcuid = data[i].bcuid
+          this.port = data[i].port
           break
         }
       }
+
+      if(this.bcuid==="") {
+        this.wait = true
+      }else {
+        this.wait = false
+      }
     })
   }
+
+
 
 }
