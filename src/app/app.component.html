@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="card">
+    <div class="card-title">Search using Dev or Port</div>
+    <div class="card-body">
+      <input type="text" class="search-input" placeholder="Search..." [(ngModel)]="val">
+      <button class="search-button" (click)="onSearch()">Search</button>
+    </div>
+
+    <p *ngIf="result"><b>BCUID: {{result}}</b></p>
+
+    <div class="loading" *ngIf="wait===true">
+      <p>Please wait while we search for your results...</p>
+      <p>If this loader keeps spinning, that means either</p>
+      <p>We are facing bad net or your searching value is incorrect</p>
+      <div class="loader"></div>
+    </div>
+    
+  </div>
+</div>
