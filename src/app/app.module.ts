@@ -4,19 +4,24 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
-import { LoginComponent } from './login/login.component';
+import { CookieService } from 'ngx-cookie-service';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { AppRoutingModule } from './app-routing.module';
+import { CreateFileComponent } from './create-file/create-file.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LandingPageComponent,
+    CreateFileComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    AppRoutingModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

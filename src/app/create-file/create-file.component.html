@@ -1,0 +1,5 @@
+<p>create-file works!</p>
+<input type="text" [(ngModel)]="password">
+<button (click)="crypto()">encrypt</button>
+<p>{{passencrypted}}</p>
+<input type="file" (change)="onFileSelected($event)">
