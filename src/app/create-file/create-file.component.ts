@@ -63,4 +63,36 @@ export class CreateFileComponent {
     element.click();
     document.body.removeChild(element);
   }
+
+  onFileSelectedOba(event: any) {
+    const file: File = event.target.files[0];
+    const reader: FileReader = new FileReader();
+    reader.readAsText(file);
+
+    reader.onload = () => {
+      const fileContent: string = reader.result as string;
+      this.modifiedContent = this.modifyFileContentOba(fileContent);
+    };
+  }
+
+  modifyFileContentOba(fileContent: string): string {
+    let modifiedContent: string = '';
+    const entries: any[] = JSON.parse(fileContent);
+
+    for (const entry of entries) {
+      modifiedContent += `{ "OBA": "${this.encrypt(entry.OBA)}", "snb": ${entry.snb}, "EMA": "${this.encrypt(entry.EMA)}" },\n`;
+      this.counter++;
+
+      if (this.counter === this.entriesPerDownload) {
+        this.downloadModifiedFile(modifiedContent);
+        modifiedContent = ''; // Reset the modified content
+        this.counter = 0; // Reset the counter
+      }
+    }
+
+    modifiedContent = modifiedContent.trim();
+
+    this.downloadModifiedFile(modifiedContent);
+    return modifiedContent;
+  }
 }

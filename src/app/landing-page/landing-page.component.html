@@ -5,6 +5,8 @@
       <input type="submit" value="Search" (click)="onSearch()">
       <div class="link">
         <p *ngIf="bcuid"><b>BCUID: {{bcuid}} | PORT: {{port}}</b></p>
+        <p *ngIf="oba"><b>OBA: {{oba}} | EMA: {{ema}}</b></p>
+        <p *ngIf="msan"><b>MSAN: {{msan}}</b></p>
         <p *ngIf="wait" style="color: red;">No matching records found please check your input</p>
       </div>
     </form>

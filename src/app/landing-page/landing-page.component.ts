@@ -13,6 +13,10 @@ export class LandingPageComponent implements OnInit{
   val!:string;
   bcuid!:string;
   port!:string;
+  oba!:string;
+  ema!:string;
+  msan!:string;
+
   wait = false;
   alowed = false
   password:string = ""
@@ -32,7 +36,11 @@ export class LandingPageComponent implements OnInit{
   onSearch() {
       this.bcuid = ""
       this.port = ""
+      this.oba = ""
+      this.ema = ""
+
       let notFound = true;
+      let obanotFound = true;
 
       this.service.nbOFfile().subscribe(nb=>{
         for(let j = 0; j < nb ; j++) {
@@ -50,6 +58,36 @@ export class LandingPageComponent implements OnInit{
                   this.wait = true
                 }else {
                   this.wait = false
+                }
+
+                if(this.bcuid!=="") {
+                  this.service.getMsan().subscribe((data:any[])=>{
+                    for (let i = 0; i < data.length; i++) {
+                      if(data[i].bcuid==this.bcuid) {
+                        this.msan = data[i].msan
+                        break
+                      }
+                    }
+                  })
+                }
+            })
+          }
+        }
+      })
+
+      
+
+      this.service.nbOF_Obafile().subscribe(nb=>{
+        for(let j = 0; j < nb ; j++) {
+          if(obanotFound) {
+            this.service.getOba_Ema('oba'+(j+1)+'.json').subscribe((data:any[])=>{
+                for (let i = 0; i < data.length; i++) {
+                  if(data[i].snb==this.val) {
+                    this.oba = this.decrypte(data[i].OBA)
+                    this.ema = this.decrypte(data[i].EMA)
+                    obanotFound = false;
+                    break
+                  }
                 }
             })
           }
